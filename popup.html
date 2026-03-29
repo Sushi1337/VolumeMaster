@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>VolumeMaster</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="frame">
+      <main class="panel">
+        <div id="unsupportedOverlay" class="unsupported-overlay" hidden>
+          <p class="unsupported-message">
+            This tab cannot be controlled.
+          </p>
+          <p class="unsupported-subtitle">
+            Open a regular website with audio or video.
+          </p>
+        </div>
+
+        <div id="confirmOverlay" class="confirm-overlay" hidden>
+          <section class="confirm-modal" aria-labelledby="confirmTitle" aria-describedby="confirmText">
+            <p class="settings-eyebrow">External Link</p>
+            <h2 id="confirmTitle" class="confirm-title">Open GitHub?</h2>
+            <p id="confirmText" class="confirm-text">
+              You are about to leave the add-on and open GitHub in a new tab.
+            </p>
+            <div class="confirm-actions">
+              <button id="confirmCancel" class="secondary" type="button">Cancel</button>
+              <button id="confirmProceed" class="primary" type="button">Open GitHub</button>
+            </div>
+          </section>
+        </div>
+
+        <div id="panelContent" class="panel-content">
+          <section class="hero">
+            <div>
+              <p class="eyebrow">Current Tab</p>
+              <h1>VolumeMaster</h1>
+            </div>
+            <div class="value-wrap">
+              <span id="volumeValue" class="value">100%</span>
+            </div>
+          </section>
+
+          <section class="slider-card">
+            <label class="slider-label" for="volumeSlider">
+              Volume
+              <span id="modeBadge" class="badge">Normal</span>
+            </label>
+            <input id="volumeSlider" type="range" min="0" max="600" step="1" value="100" />
+            <div class="range-labels">
+              <span>0%</span>
+              <span>600%</span>
+            </div>
+          </section>
+
+          <section class="quick-actions">
+            <button class="preset" data-volume="50">50%</button>
+            <button class="preset" data-volume="100">100%</button>
+            <button class="preset" data-volume="200">200%</button>
+            <button class="preset" data-volume="400">400%</button>
+          </section>
+
+          <section class="actions">
+            <button id="muteButton" class="secondary">Mute</button>
+            <button id="resetButton" class="primary">Reset</button>
+          </section>
+
+          <p id="status" class="status" aria-live="polite">
+            Ready.
+          </p>
+
+          <button
+            id="bugLink"
+            class="bug-link"
+            type="button"
+            aria-label="Open bug report page"
+          >
+            <svg class="bug-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M9 8V6.5C9 4.567 10.567 3 12.5 3C14.433 3 16 4.567 16 6.5V8" />
+              <path d="M8 10.5C8 8.567 9.567 7 11.5 7H13.5C15.433 7 17 8.567 17 10.5V15C17 18.314 14.314 21 11 21H14C10.686 21 8 18.314 8 15V10.5Z" />
+              <path d="M5 9L8 10.5" />
+              <path d="M19 9L17 10.5" />
+              <path d="M5 15H8" />
+              <path d="M17 15H19" />
+              <path d="M6 19L8.5 17.5" />
+              <path d="M18 19L16.5 17.5" />
+            </svg>
+          </button>
+
+          <button id="settingsToggle" class="settings-toggle" type="button" aria-label="Open settings" aria-expanded="false">
+            <span class="gear" aria-hidden="true">&#9881;</span>
+          </button>
+
+          <section id="settingsPanel" class="settings-panel" hidden>
+            <div class="settings-header">
+              <p class="settings-eyebrow">Settings</p>
+              <button id="settingsClose" class="icon-button" type="button" aria-label="Close settings">x</button>
+            </div>
+
+            <section class="settings-group">
+              <div class="settings-copy">
+                <strong>Accent Color</strong>
+                <small>Pick a color variant for the interface</small>
+              </div>
+              <div class="theme-options" id="themeOptions">
+                <button class="theme-option is-selected" type="button" data-accent-theme="amber" aria-label="Amber theme">
+                  <span class="theme-dot theme-dot-amber"></span>
+                </button>
+                <button class="theme-option" type="button" data-accent-theme="ocean" aria-label="Ocean theme">
+                  <span class="theme-dot theme-dot-ocean"></span>
+                </button>
+                <button class="theme-option" type="button" data-accent-theme="forest" aria-label="Forest theme">
+                  <span class="theme-dot theme-dot-forest"></span>
+                </button>
+                <button class="theme-option" type="button" data-accent-theme="rose" aria-label="Rose theme">
+                  <span class="theme-dot theme-dot-rose"></span>
+                </button>
+              </div>
+            </section>
+
+            <label class="setting-row" for="darkModeToggle">
+              <span>
+                <strong>Dark Mode</strong>
+                <small>Enable a dark theme for the add-on</small>
+              </span>
+              <span class="switch">
+                <input id="darkModeToggle" type="checkbox" />
+                <span class="switch-ui"></span>
+              </span>
+            </label>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+  </html>
