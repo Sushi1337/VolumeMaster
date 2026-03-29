@@ -186,6 +186,38 @@ async function sendToActiveTab(message) {
   return browser.tabs.sendMessage(activeTabId, message);
 }
 
+async function updateToolbarBadge(volume) {
+  if (activeTabId == null) {
+    return;
+  }
+
+  try {
+    await browser.runtime.sendMessage({
+      type: "UPDATE_BADGE",
+      tabId: activeTabId,
+      volume
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function refreshToolbarBadgeStyle() {
+  if (activeTabId == null || currentVolume === DEFAULT_VOLUME) {
+    return;
+  }
+
+  try {
+    await browser.runtime.sendMessage({
+      type: "REFRESH_BADGE_STYLE",
+      tabId: activeTabId,
+      volume: currentVolume
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 async function initialize() {
   try {
     await loadTheme();
@@ -204,6 +236,7 @@ async function initialize() {
     activeTabId = activeTab.id;
     const state = await sendToActiveTab({ type: "GET_STATE" });
     updateUi(state.volume, state.muted);
+    await updateToolbarBadge(state.volume);
     setUnsupportedState(false);
     setControlsDisabled(false);
     setStatus(STATUS_MESSAGES.active);
@@ -225,6 +258,7 @@ async function applyVolume(volume) {
     });
 
     updateUi(state.volume, state.muted);
+    await updateToolbarBadge(state.volume);
     setStatus(state.hasMedia ? STATUS_MESSAGES.applied : STATUS_MESSAGES.pending);
   } catch (error) {
     console.error(error);
@@ -253,6 +287,7 @@ muteButton.addEventListener("click", async () => {
   try {
     const state = await sendToActiveTab({ type: "TOGGLE_MUTE" });
     updateUi(state.volume, state.muted);
+    await updateToolbarBadge(state.volume);
     setStatus(state.muted ? STATUS_MESSAGES.muted : STATUS_MESSAGES.restored);
   } catch (error) {
     console.error(error);
@@ -292,6 +327,7 @@ confirmProceed.addEventListener("click", () => {
 darkModeToggle.addEventListener("change", async () => {
   try {
     await saveTheme(darkModeToggle.checked ? "dark" : "light");
+    await refreshToolbarBadgeStyle();
     setStatus(darkModeToggle.checked ? STATUS_MESSAGES.darkOn : STATUS_MESSAGES.darkOff);
   } catch (error) {
     console.error(error);
@@ -303,6 +339,7 @@ themeOptions.forEach((button) => {
   button.addEventListener("click", async () => {
     try {
       await saveAccentTheme(button.dataset.accentTheme);
+      await refreshToolbarBadgeStyle();
       setStatus(STATUS_MESSAGES.accentSaved);
     } catch (error) {
       console.error(error);

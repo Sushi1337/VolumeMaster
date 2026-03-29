@@ -156,6 +156,9 @@ browser.runtime.onMessage.addListener((message) => {
   }
 
   switch (message.type) {
+    case "PING":
+      return Promise.resolve({ ok: true });
+
     case "GET_STATE":
       syncMediaElements();
       return Promise.resolve({
