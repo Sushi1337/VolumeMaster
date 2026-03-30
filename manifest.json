@@ -35,9 +35,14 @@
       "run_at": "document_idle"
     }
   ],
-  "applications": {
+  "browser_specific_settings": {
     "gecko": {
-      "id": "volumemaster@sushi1337.dev"
+      "id": "volumemaster@sushi1337.dev",
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ]
+      }
     }
   }
 }

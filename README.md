@@ -53,6 +53,63 @@ For local testing in Firefox:
 3. Click `Load Temporary Add-on`
 4. Choose `manifest.json`
 
+## Release for Firefox Distribution
+
+If you want to distribute this add-on to other Firefox users, there are two realistic paths:
+
+- publish it on `addons.mozilla.org` (`AMO`)
+- self-distribute a signed `.xpi`
+
+### 1. Build the package
+
+From the project root, create the release file:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\package-firefox.ps1
+```
+
+That creates `dist/volumemaster-firefox-<version>.xpi`.
+
+### 2. Prepare the Firefox metadata
+
+The manifest already includes:
+
+- a stable Firefox add-on ID
+- `browser_specific_settings.gecko`
+- `data_collection_permissions.required: ["none"]`
+
+That setup is important for signing, store submission, and future updates.
+
+### 3. Choose a distribution path
+
+#### AMO listing
+
+Use this if you want normal Firefox users to discover and install the add-on through the Mozilla add-on store.
+
+High-level flow:
+
+1. Create the `.xpi`
+2. Sign in to the Firefox Add-on Developer Hub
+3. Upload the package
+4. Fill out listing data such as description, categories, screenshots, and support links
+5. Submit for review
+
+#### Self-distribution
+
+Use this if you want to host the `.xpi` yourself or share it directly.
+
+Important: Firefox still expects the package to be signed. Unsigned temporary installs are for development only.
+
+If you want Firefox to handle updates for a self-hosted build later, add an `update_url` in `browser_specific_settings.gecko` and host the update manifest yourself.
+
+### Release checklist
+
+- bump `manifest.json` version before each release
+- run the packaging script
+- test the packaged add-on in Firefox
+- upload the package to AMO or sign it for self-distribution
+- add screenshots and store metadata if publishing on AMO
+
 ## Notes
 
 - The extension is mainly designed for regular websites with HTML media elements.
