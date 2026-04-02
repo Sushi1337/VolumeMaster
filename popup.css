@@ -360,6 +360,7 @@ button:active {
 }
 
 .bug-link,
+.info-link,
 .settings-toggle,
 .icon-button {
   display: inline-flex;
@@ -367,11 +368,17 @@ button:active {
   justify-content: center;
 }
 
-.bug-link {
+.button-group {
   position: absolute;
   left: 10px;
   bottom: 8px;
   z-index: 3;
+  display: flex;
+  gap: 8px;
+}
+
+.bug-link,
+.info-link {
   width: 34px;
   height: 34px;
   border-radius: 10px;
@@ -382,7 +389,8 @@ button:active {
   transition: box-shadow 140ms ease, background-color 140ms ease, filter 140ms ease, color 140ms ease;
 }
 
-.bug-icon {
+.bug-icon,
+.info-icon {
   width: 18px;
   height: 18px;
   fill: none;
@@ -507,6 +515,7 @@ button:active {
 
 .theme-option:focus-visible,
 .bug-link:focus-visible,
+.info-link:focus-visible,
 .settings-toggle:focus-visible,
 .icon-button:focus-visible,
 .preset:focus-visible,

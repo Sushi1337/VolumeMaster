@@ -20,6 +20,8 @@ const confirmCancel = document.getElementById("confirmCancel");
 const confirmProceed = document.getElementById("confirmProceed");
 const panel = document.querySelector(".panel");
 const unsupportedOverlay = document.getElementById("unsupportedOverlay");
+const infoLink = document.getElementById("infoLink");
+const INFO_URL = "https://github.com";
 
 const THEME_STORAGE_KEY = "uiTheme";
 const ACCENT_STORAGE_KEY = "accentTheme";
@@ -313,6 +315,10 @@ settingsClose.addEventListener("click", () => {
 
 bugLink.addEventListener("click", () => {
   setConfirmOpen(true);
+});
+
+infoLink.addEventListener("click", () => {
+  window.open(INFO_URL, "_blank", "noopener,noreferrer");
 });
 
 confirmCancel.addEventListener("click", () => {
